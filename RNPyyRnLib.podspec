@@ -4,11 +4,10 @@ Pod::Spec.new do |s|
   s.version      = "1.0.0"
   s.summary      = "RNPyyRnLib"
   s.description  = <<-DESC
-                  RNPyyRnLib
+                  神策分析 RN 组件
                    DESC
-  s.homepage     = ""
+  s.homepage     = "https://www.sensorsdata.cn"
   s.license      = "MIT"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "author" => "author@domain.cn" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/author/RNPyyRnLib.git", :tag => "master" }
@@ -17,7 +16,7 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React"
-  #s.dependency "others"
+  s.dependency "SensorsAnalyticsSDK"
 
 end
 

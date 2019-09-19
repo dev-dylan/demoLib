@@ -2,21 +2,27 @@
 {
   "name": "react-native-pyy-rn-lib",
   "version": "1.0.0",
-  "description": "this is a demo lin",
+  "private": false,
+  "description": "神策分析 RN 组件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "sensors",
+    "analytics",
+    "神策",
+    "神策分析"
   ],
   "repository": {
       "type": "git",
       "url": "https://github.com/dev-dylan/pyy-rn-lib.git"
   },
   "author": "Dylan",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "react-native": "^0.41.2"
-  }
+  },
+  "homepage": "https://github.com/sensorsdata/react-native-sensors-analytics"
 }
