@@ -13,8 +13,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/author/RNPyyRnLib.git", :tag => "master" }
   s.source_files  = "RNPyyRnLib/**/*.{h,m}"
   s.requires_arc = true
-
-
   s.dependency "React"
   s.dependency "SensorsAnalyticsSDK"
 

@@ -12,7 +12,7 @@ export default RNPyyRnLib;
  * @param loginId
  */
 function login (loginId) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.login && RNSensorsAnalyticsModule.login(loginId);
+    RNPyyRnLib && RNPyyRnLib.login && RNPyyRnLib.login(loginId);
   }
   
   /**
@@ -23,7 +23,7 @@ function login (loginId) {
    * Age
    */
   function profileSet (profile) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.profileSet && RNSensorsAnalyticsModule.profileSet(profile);
+    RNPyyRnLib && RNPyyRnLib.profileSet && RNPyyRnLib.profileSet(profile);
   }
   
   /**
@@ -32,7 +32,7 @@ function login (loginId) {
    * @param profile
    */
   function profileSetOnce (profile) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.profileSetOnce && RNSensorsAnalyticsModule.profileSetOnce(profile);
+    RNPyyRnLib && RNPyyRnLib.profileSetOnce && RNPyyRnLib.profileSetOnce(profile);
   }
   
   
@@ -43,7 +43,7 @@ function login (loginId) {
    * @param properties
    */
   function track (event, properties) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.track && RNSensorsAnalyticsModule.track(event, properties);
+    RNPyyRnLib && RNPyyRnLib.track && RNPyyRnLib.track(event, properties);
   }
   
   /**
@@ -52,7 +52,7 @@ function login (loginId) {
    * @param event
    */
   function trackTimerStart (event) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.trackTimerStart && RNSensorsAnalyticsModule.trackTimerStart(event);
+    RNPyyRnLib && RNPyyRnLib.trackTimerStart && RNPyyRnLib.trackTimerStart(event);
   }
   
   /**
@@ -62,7 +62,7 @@ function login (loginId) {
    * @param properties
    */
   function trackTimerEnd (event, properties) {
-    RNSensorsAnalyticsModule && RNSensorsAnalyticsModule.trackEnd && RNSensorsAnalyticsModule.trackEnd(event, properties);
+    RNPyyRnLib && RNPyyRnLib.trackEnd && RNPyyRnLib.trackEnd(event, properties);
   }
   
   
@@ -73,6 +73,6 @@ function login (loginId) {
     track,
     trackTimerStart,
     trackTimerEnd,
-    sa: RNSensorsAnalyticsModule,
+    sa: RNPyyRnLib,
   };
   
