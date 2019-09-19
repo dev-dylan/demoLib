@@ -1,0 +1,22 @@
+
+{
+  "name": "react-native-pyy-rn-lib",
+  "version": "1.0.0",
+  "description": "this is a demo lin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/dev-dylan/pyy-rn-lib.git"
+  },
+  "author": "Dylan",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
+}
