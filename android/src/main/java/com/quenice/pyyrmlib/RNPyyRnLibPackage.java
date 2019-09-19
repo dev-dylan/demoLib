@@ -1,5 +1,5 @@
 
-package com.quenice.pyyrmlib;
+package com.quenice.pyyrnlib;
 
 import java.util.Arrays;
 import java.util.Collections;

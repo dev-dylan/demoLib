@@ -1,5 +1,5 @@
 
-package com.quenice.pyyrmlib;
+package com.quenice.pyyrnlib;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
