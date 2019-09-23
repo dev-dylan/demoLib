@@ -604,6 +604,35 @@
     }
 
     /**
+     * 导出 registerDynamicSuperProperties 方法给 RN 使用.
+     *
+     * @param property 要设置的动态公共属性
+     *
+     * RN 中使用示例：（设置动态公共属性 "randomNum"）
+     *      function randomNum() {
+     *          var num = Math.random() * 10
+     *          var object = {"testNum":num};
+     *          return object;
+     *       }
+     *
+     *     <Button
+     *            title="Button"
+     *            onPress={()=>
+     *            var properties = randomNum()
+     *            RNPyyRnLib.registerDynamicSuperProperties(properties)}>
+     *     </Button>
+     */
+    RCT_EXPORT_METHOD(registerDynamicSuperProperties:(NSDictionary *)properties) {
+        @try {
+            [[SensorsAnalyticsSDK sharedInstance] registerDynamicSuperProperties:^NSDictionary<NSString *,id> * _Nonnull{
+                return properties;
+            }];
+        } @catch (NSException *exception) {
+            NSLog(@"[RNSensorsAnalytics] error:%@",exception);
+        }
+    }
+
+    /**
      * 导出 clearSuperProperties 方法给 RN 使用.
      *
      *
