@@ -2,7 +2,7 @@
 #import "RNPyyRnLib.h"
 #import <React/RCTBridge.h>
 #import <React/RCTEventDispatcher.h>
-#import "SensorsAnalyticsSDK.h"
+#import <SensorsAnalyticsSDK/SensorsAnalyticsSDK.h>
 
 @implementation RNPyyRnLib
 
