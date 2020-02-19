@@ -50,7 +50,7 @@ RCT_EXPORT_METHOD(track:(NSString *)event withProperties:(NSDictionary *)propert
  */
 RCT_EXPORT_METHOD(trackTimerBegin:(NSString *)event){
     @try {
-        [[SensorsAnalyticsSDK sharedInstance] trackTimerBegin:event];
+        [[SensorsAnalyticsSDK sharedInstance] trackTimerStart:event];
     } @catch (NSException *exception) {
         NSLog(@"[RNSensorsAnalytics] error:%@",exception);
     }
@@ -655,8 +655,6 @@ RCT_EXPORT_METHOD(clearSuperProperties){
 /**
 * 导出 identify 方法给 RN 使用.
 *
-*                   <p>
-*                   RN 中使用示例：（删除本地数据库的所有数据！！！请谨慎使用）
 *                   <Button
 *                   title="Button"
 *                   onPress={()=>
@@ -672,29 +670,8 @@ RCT_EXPORT_METHOD(identify:(NSString *)anonymousId) {
 }
 
 /**
-* 导出 trackChannelEvent 方法给 RN 使用.
-*
-*                   <p>
-*                   RN 中使用示例：（删除本地数据库的所有数据！！！请谨慎使用）
-*                   <Button
-*                   title="Button"
-*                   onPress={()=>
-*                   RNSensorsAnalyticsModule.trackChannelEvent("channelEvent")}>
-*                   </Button>
-*/
-RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event) {
-    @try {
-        [[SensorsAnalyticsSDK sharedInstance] trackChannelEvent:event];
-    } @catch (NSException *exception) {
-        NSLog(@"[RNSensorsAnalytics] error:%@",exception);
-    }
-}
-
-/**
 * 导出 trackChannelEvent:properties 方法给 RN 使用.
 *
-*                   <p>
-*                   RN 中使用示例：（删除本地数据库的所有数据！！！请谨慎使用）
 *                   <Button
 *                   title="Button"
 *                   onPress={()=>
@@ -708,7 +685,6 @@ RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event properties:(nullable NSDic
         NSLog(@"[RNSensorsAnalytics] error:%@",exception);
     }
 }
-
 
 @end
   
