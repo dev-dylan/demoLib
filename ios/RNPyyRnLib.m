@@ -712,6 +712,58 @@ RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event properties:(nullable NSDic
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+
++ (id)sensorAnalytics {
+    Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
+    SEL shared = NSSelectorFromString(@"sharedInstance");
+    if (![sa respondsToSelector:shared]) {
+        return nil;
+    }
+    return [sa performSelector:shared];
+}
+
+RCT_EXPORT_METHOD(trackViewClick:(NSInteger)reactTag) {
+    @try {
+        id sdk = [RNSensorsAnalyticsModule sensorAnalytics];
+        if (![sdk performSelector:NSSelectorFromString(@"trackViewClick:")]) {
+            return;
+        }
+        [sdk performSelector:NSSelectorFromString(@"trackViewClick:") withObject:@(reactTag)];
+    } @catch (NSException *exception) {
+        NSLog(@"[RNSensorsAnalytics] error:%@",exception);
+    }
+}
+
+RCT_EXPORT_METHOD(prepareView:(NSInteger)reactTag enableClick:(BOOL)enableClick properties:(NSDictionary *)properties) {
+  @try {
+      id sdk = [RNSensorsAnalyticsModule sensorAnalytics];
+      SEL prepareView = NSSelectorFromString(@"prepareView:properties:");
+      if (![sdk performSelector:prepareView]) {
+          return;
+      }
+      NSDictionary *object = @{@"reactTag":@(reactTag), @"enableClick":@(enableClick)};
+      [sdk performSelector:prepareView withObject:object withObject:properties];
+  } @catch (NSException *exception) {
+      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
+  }
+}
+
+RCT_EXPORT_METHOD(onPageShow:(NSString *)pageName) {
+  @try {
+      id sdk = [RNSensorsAnalyticsModule sensorAnalytics];
+      SEL onPageShow = NSSelectorFromString(@"trackViewScreen:withProperties:");
+      if (![sdk performSelector:onPageShow]) {
+          return;
+      }
+      [sdk performSelector:onPageShow withObject:pageName withObject:nil];
+  } @catch (NSException *exception) {
+      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
+  }
+}
+
+#pragma clang diagnostic pop
 
 @end
   
