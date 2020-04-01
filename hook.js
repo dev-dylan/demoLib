@@ -2,12 +2,12 @@
 
 var path = require("path");
 var injector = require("./GIOInjector");
-var userPackageObj = require("./package.json");
+var packageObj = require("./package.json");
 
-// var userPackageObj = require("../../package.json");
+var userPackageObj = require("../../package.json");
 
 // version for hook.js
-var HOOK_VERSION = userPackageObj["version"];
+var HOOK_VERSION = packageObj["version"];
 
 var OPT_RUN = 0;
 var OPT_DISCARD = 0;
@@ -74,16 +74,8 @@ if (OPT_VERSION == 1) {
     return;
 }
 
-var dir = path.resolve(__dirname,"node_modules");
-reactNativePath = dir + '/react-native';
-/**
- * hook config
-
-if (OPT_RUN == 1) {
-    injector.injectReactNative(reactNativePath);
-    return;
-}
- */
+var dir = path.resolve(__dirname, '..');
+console.log(dir);
 /**
  * path config
  */
