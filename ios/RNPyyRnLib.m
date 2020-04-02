@@ -718,22 +718,19 @@ RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event properties:(nullable NSDic
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 
-+ (id)sensorAnalytics {
-    Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
-    SEL shared = NSSelectorFromString(@"sharedInstance");
-    if (![sa respondsToSelector:shared]) {
-        return nil;
-    }
-    return [sa performSelector:shared];
-}
-
 RCT_EXPORT_METHOD(trackViewClick:(NSInteger)reactTag) {
     @try {
-        id sdk = [RNPyyRnLib sensorAnalytics];
-        if (![sdk performSelector:NSSelectorFromString(@"trackViewClick:")]) {
+        Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
+        SEL shared = NSSelectorFromString(@"sharedInstance");
+        if (![sa respondsToSelector:shared]) {
             return;
         }
-        [sdk performSelector:NSSelectorFromString(@"trackViewClick:") withObject:@(reactTag)];
+        id sdk = [sa performSelector:shared];
+        if (![sdk respondsToSelector:NSSelectorFromString(@"trackViewClick:")]) {
+            return;
+        }
+        NSNumber *tag = [NSNumber numberWithInteger:reactTag];
+        [sdk performSelector:NSSelectorFromString(@"trackViewClick:") withObject:tag];
     } @catch (NSException *exception) {
         NSLog(@"[RNSensorsAnalytics] error:%@",exception);
     }
@@ -741,9 +738,14 @@ RCT_EXPORT_METHOD(trackViewClick:(NSInteger)reactTag) {
 
 RCT_EXPORT_METHOD(prepareView:(NSInteger)reactTag enableClick:(BOOL)enableClick properties:(NSDictionary *)properties) {
   @try {
-      id sdk = [RNPyyRnLib sensorAnalytics];
+      Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
+      SEL shared = NSSelectorFromString(@"sharedInstance");
+      if (![sa respondsToSelector:shared]) {
+          return;
+      }
+      id sdk = [sa performSelector:shared];
       SEL prepareView = NSSelectorFromString(@"prepareView:properties:");
-      if (![sdk performSelector:prepareView]) {
+      if (![sdk respondsToSelector:prepareView]) {
           return;
       }
       NSDictionary *object = @{@"reactTag":@(reactTag), @"enableClick":@(enableClick)};
@@ -755,18 +757,23 @@ RCT_EXPORT_METHOD(prepareView:(NSInteger)reactTag enableClick:(BOOL)enableClick 
 
 RCT_EXPORT_METHOD(onPageShow:(NSString *)pageName) {
   @try {
-      id sdk = [RNPyyRnLib sensorAnalytics];
+      Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
+      SEL shared = NSSelectorFromString(@"sharedInstance");
+      if (![sa respondsToSelector:shared]) {
+          return;
+      }
+      id sdk = [sa performSelector:shared];
       SEL onPageShow = NSSelectorFromString(@"trackViewScreen:withProperties:");
-      if (![sdk performSelector:onPageShow]) {
+      if (![sdk respondsToSelector:onPageShow]) {
           return;
       }
       [sdk performSelector:onPageShow withObject:pageName withObject:nil];
   } @catch (NSException *exception) {
-      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
+//      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
   }
 }
 
 #pragma clang diagnostic pop
 
 @end
-  
+

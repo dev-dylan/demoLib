@@ -389,7 +389,7 @@ function onPressTransformer(content){
 	if(index == -1)
 		throw "Can't not hook onPress function";
 	var injectScript = "var ReactNative = require('react-native');\n" +
-		"this.props.onPress&&ReactNative.NativeModules.RNPyyRnLib.trackRNClick(ReactNative.findNodeHandle(this));"
+		"this.props.onPress&&ReactNative.NativeModules.RNPyyRnLib.trackViewClick(ReactNative.findNodeHandle(this));"
 	injectScript = common.anonymousJsFunctionCall(injectScript);
 	var result = `${content.substring(0, index)}\n${injectScript}\n${content.substring(index)}`
 	return result;
