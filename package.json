@@ -1,28 +1,22 @@
-
 {
-  "name": "react-native-pyy-rn-lib",
-  "version": "1.1.17",
+  "name": "chenru-react-native-test",
+  "version": "0.0.40",
   "private": false,
-  "description": "神策分析 RN 组件",
+  "description": "RN 组件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native",
-    "sensors",
-    "analytics",
-    "神策",
-    "神策分析"
+    "chenru",
+    "reactnative"
   ],
-  "repository": {
-      "type": "git",
-      "url": "https://github.com/dev-dylan/pyy-rn-lib.git"
-  },
-  "author": "Dylan",
+  "author": "chenru",
   "license": "Apache-2.0",
-  "peerDependencies": {
-    "react-native": "^0.41.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cr1106/ReactNativeTest.git"
   },
-  "homepage": "https://github.com/sensorsdata/react-native-sensors-analytics"
+  "homepage": "https://github.com/cr1106/ReactNativeTest",
+  "dependencies": {}
 }

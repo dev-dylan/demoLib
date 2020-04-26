@@ -1,45 +1,45 @@
+# chenru-react-native-test
 
-# react-native-pyy-rn-lib
+# 1.安装 React Native 模块
 
-## Getting started
+## 1.1 npm 安装 chenru-react-native-test 模块
 
-`$ npm install react-native-pyy-rn-lib --save`
-
-### Mostly automatic installation
-
-`$ react-native link react-native-pyy-rn-lib`
-
-### Manual installation
-
-
-#### iOS
-
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-pyy-rn-lib` and add `RNPyyRnLib.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNPyyRnLib.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
-
-#### Android
-
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.quenice.pyyrmlib.RNPyyRnLibPackage;` to the imports at the top of the file
-  - Add `new RNPyyRnLibPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-pyy-rn-lib'
-  	project(':react-native-pyy-rn-lib').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-pyy-rn-lib/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':react-native-pyy-rn-lib')
-  	```
-
-
-## Usage
-```javascript
-import RNPyyRnLib from 'react-native-pyy-rn-lib';
-
-// TODO: What to do with the module?
-RNPyyRnLib;
+```sh
+npm install chenru-react-native-test
 ```
-  
+
+## 1.2 `link` chenru-react-native-test 模块
+
+
+```sh
+react-native link chenru-react-native-test
+```
+# 2.开启 React Native 全埋点
+
+## 2.1 开启全埋点
+首先在 package.json 中增加如下配置：
+```sh
+"sensorsdata":{
+    "click":"enable",
+    "pageview":"enable"
+ }
+```
+<span style="color:red">注意：关闭全埋点后需要调用</span>
+```sh
+node node_modules/chenru-react-native-test/SensorsdataRNHook.js -reset
+```
+
+## 2.2 执行 SensorsdataRNHook.js
+```sh
+node node_modules/sensorsdata-analytics-react-native/SensorsdataRNHook.js -run
+```
+<span style="color:red">注意：每次 npm install 后都需要重新调用，可在 package.json 中配置，保存后调用 npm install</span>
+```sh
+"scripts": {
+	  "postinstall": "node node_modules/chenru-react-native-test/SensorsdataRNHook.js -run"
+}
+```
+
+
+
+### 详细文档请参考：[Android & iOS SDK 在 React Native 中使用说明](https://www.sensorsdata.cn/manual/sdk_reactnative.html)

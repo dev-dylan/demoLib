@@ -1,5 +1,14 @@
+//
+//  RNSensorsAnalyticsModule.m
+//  RNSensorsAnalyticsModule
+//
+//  Created by 肖彦敏 on 2017/4/14.
+//  Copyright © 2017年 Facebook. All rights reserved.
+//
 
-#import "RNPyyRnLib.h"
+#import "RNSensorsAnalyticsModule.h"
+#import "SAReactNativeManager.h"
+
 #if __has_include("SensorsAnalyticsSDK.h")
 #import "SensorsAnalyticsSDK.h"
 #else
@@ -7,9 +16,9 @@
 #endif
 
 
-@implementation RNPyyRnLib
+@implementation RNSensorsAnalyticsModule
 
-RCT_EXPORT_MODULE(RNPyyRnLib)
+RCT_EXPORT_MODULE(RNSensorsAnalyticsModule)
 
 /**
  * 导出 track 方法给 RN 使用.
@@ -21,7 +30,7 @@ RCT_EXPORT_MODULE(RNPyyRnLib)
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.track("RN_AddToFav",{"ProductID":123456,"UserLevel":"VIP"})}>
+ *            RNSensorsAnalyticsModule.track("RN_AddToFav",{"ProductID":123456,"UserLevel":"VIP"})}>
  *     </Button>
  */
 
@@ -48,7 +57,7 @@ RCT_EXPORT_METHOD(track:(NSString *)event withProperties:(NSDictionary *)propert
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.trackTimerBegin("viewTimer")}>
+ *            RNSensorsAnalyticsModule.trackTimerBegin("viewTimer")}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(trackTimerBegin:(NSString *)event){
@@ -69,7 +78,7 @@ RCT_EXPORT_METHOD(trackTimerBegin:(NSString *)event){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.trackTimerStart("viewTimer")}>
+ *            RNSensorsAnalyticsModule.trackTimerStart("viewTimer")}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(trackTimerStart:(NSString *)event){
@@ -89,7 +98,7 @@ RCT_EXPORT_METHOD(trackTimerStart:(NSString *)event){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.trackTimerEnd("viewTimer",{"ProductID":123456,"UserLevel":"VIP"})}>
+ *            RNSensorsAnalyticsModule.trackTimerEnd("viewTimer",{"ProductID":123456,"UserLevel":"VIP"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(trackTimerEnd:(NSString *)event withProperties:(NSDictionary *)propertyDict){
@@ -108,7 +117,7 @@ RCT_EXPORT_METHOD(trackTimerEnd:(NSString *)event withProperties:(NSDictionary *
  *      <Button
  *                 title="Button"
  *                 onPress={()=>
- *                 RNPyyRnLib.clearTrackTimer()}>
+ *                 RNSensorsAnalyticsModule.clearTrackTimer()}>
  *      </Button>
  */
 RCT_EXPORT_METHOD(clearTrackTimer){
@@ -138,7 +147,7 @@ RCT_EXPORT_METHOD(clearTrackTimer){
  *            this.second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
  *            var currentTime =  this.year + "-" + this.month + "-" + this.date + " " + this.hour
  *                               + ":" + this.minute + ":" + this.second;
- *            RNPyyRnLib.trackInstallation("AppInstall",{"FirstUseTime":currentTime})}>
+ *            RNSensorsAnalyticsModule.trackInstallation("AppInstall",{"FirstUseTime":currentTime})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(trackInstallation:(NSString *)event withProperties:(NSDictionary *)propertyDict){
@@ -157,7 +166,7 @@ RCT_EXPORT_METHOD(trackInstallation:(NSString *)event withProperties:(NSDictiona
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.login("developer@sensorsdata.cn")}>
+ *            RNSensorsAnalyticsModule.login("developer@sensorsdata.cn")}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(login:(NSString *)loginId){
@@ -174,7 +183,7 @@ RCT_EXPORT_METHOD(login:(NSString *)loginId){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.logout()}>
+ *            RNSensorsAnalyticsModule.logout()}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(logout){
@@ -199,18 +208,21 @@ RCT_EXPORT_METHOD(logout){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.trackViewScreen(null,{"$title":"RN主页","$screen_name":"cn.sensorsdata.demo.RNHome"})}>
+ *            RNSensorsAnalyticsModule.trackViewScreen(null,{"$title":"RN主页","$screen_name":"cn.sensorsdata.demo.RNHome"})}>
  *     </Button>
  *
  *
  */
 RCT_EXPORT_METHOD(trackViewScreen:(NSString *)url withProperties:(NSDictionary *)properties){
     @try {
-        [[SensorsAnalyticsSDK sharedInstance] trackViewScreen:url withProperties:properties];
+        if (!url.length) {
+            NSLog(@"[RNSensorsAnalytics] error: url is empty ！！！");
+            return;
+        }
+        [SAReactNativeManager trackViewScreen:url properties:properties];
     } @catch (NSException *exception) {
         NSLog(@"[RNSensorsAnalytics] error:%@",exception);
     }
-
 }
 /**
  * 导出 set 方法给 RN 使用.
@@ -221,7 +233,7 @@ RCT_EXPORT_METHOD(trackViewScreen:(NSString *)url withProperties:(NSDictionary *
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.set({"sex":"男"})}>
+ *            RNSensorsAnalyticsModule.set({"sex":"男"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(set:(NSDictionary *)profileDict){
@@ -240,7 +252,7 @@ RCT_EXPORT_METHOD(set:(NSDictionary *)profileDict){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.profileSet({"sex":"男"})}>
+ *            RNSensorsAnalyticsModule.profileSet({"sex":"男"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(profileSet:(NSDictionary *)profileDict){
@@ -262,7 +274,7 @@ RCT_EXPORT_METHOD(profileSet:(NSDictionary *)profileDict){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.setOnce({"sex":"男"})}>
+ *            RNSensorsAnalyticsModule.setOnce({"sex":"男"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(setOnce:(NSDictionary *)profileDict){
@@ -284,7 +296,7 @@ RCT_EXPORT_METHOD(setOnce:(NSDictionary *)profileDict){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.profileSetOnce({"sex":"男"})}>
+ *            RNSensorsAnalyticsModule.profileSetOnce({"sex":"男"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(profileSetOnce:(NSDictionary *)profileDict){
@@ -305,7 +317,7 @@ RCT_EXPORT_METHOD(profileSetOnce:(NSDictionary *)profileDict){
  *                 <Button
  *                 title="Button"
  *                 onPress={()=>
- *                 RNPyyRnLib.unset("sex")}>
+ *                 RNSensorsAnalyticsModule.unset("sex")}>
  *                 </Button>
  */
 RCT_EXPORT_METHOD(unset:(NSString *) profile){
@@ -327,7 +339,7 @@ RCT_EXPORT_METHOD(unset:(NSString *) profile){
  *                 <Button
  *                 title="Button"
  *                 onPress={()=>
- *                 RNPyyRnLib.profileUnset("sex")}>
+ *                 RNSensorsAnalyticsModule.profileUnset("sex")}>
  *                 </Button>
  */
 RCT_EXPORT_METHOD(profileUnset:(NSString *) profile){
@@ -351,7 +363,7 @@ RCT_EXPORT_METHOD(profileUnset:(NSString *) profile){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.increment("money",10)}>
+ *            RNSensorsAnalyticsModule.increment("money",10)}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(increment:(NSString *)profile by:(NSNumber *)amount){
@@ -375,7 +387,7 @@ RCT_EXPORT_METHOD(increment:(NSString *)profile by:(NSNumber *)amount){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.profileIncrement("money",10)}>
+ *            RNSensorsAnalyticsModule.profileIncrement("money",10)}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(profileIncrement:(NSString *)profile by:(NSNumber *)amount){
@@ -398,7 +410,7 @@ RCT_EXPORT_METHOD(profileIncrement:(NSString *)profile by:(NSNumber *)amount){
  *                 title="Button"
  *                 onPress={()=>{
  *                   var list = ["Sicario","Love Letter"];
- *                   RNPyyRnLib.append("Move",list);}>
+ *                   RNSensorsAnalyticsModule.append("Move",list);}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(append:(NSString *)profile by:(NSArray *)content){
@@ -422,7 +434,7 @@ RCT_EXPORT_METHOD(append:(NSString *)profile by:(NSArray *)content){
  *                 title="Button"
  *                 onPress={()=>{
  *                   var list = ["Sicario","Love Letter"];
- *                   RNPyyRnLib.profileAppend("Move",list);}>
+ *                   RNSensorsAnalyticsModule.profileAppend("Move",list);}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(profileAppend:(NSString *)profile by:(NSArray *)content){
@@ -443,7 +455,7 @@ RCT_EXPORT_METHOD(profileAppend:(NSString *)profile by:(NSArray *)content){
  *      <Button
  *                title="Button"
  *                onPress={()=>
- *                RNPyyRnLib.deleteUser()}>
+ *                RNSensorsAnalyticsModule.deleteUser()}>
  *      </Button>
  */
 RCT_EXPORT_METHOD(deleteUser){
@@ -463,7 +475,7 @@ RCT_EXPORT_METHOD(deleteUser){
  *      <Button
  *                title="Button"
  *                onPress={()=>
- *                RNPyyRnLib.profileDelete()}>
+ *                RNSensorsAnalyticsModule.profileDelete()}>
  *      </Button>
  */
 RCT_EXPORT_METHOD(profileDelete){
@@ -485,7 +497,7 @@ RCT_EXPORT_METHOD(profileDelete){
  *      <Button
  *                title="Button"
  *                onPress={()=>
- *                RNPyyRnLib.clearKeychainData()}>
+ *                RNSensorsAnalyticsModule.clearKeychainData()}>
  *      </Button>
  */
 RCT_EXPORT_METHOD(clearKeychainData){
@@ -502,7 +514,7 @@ RCT_EXPORT_METHOD(clearKeychainData){
  * 获取distinctId .
  * <p>
  * RN 中使用示例：
- * var distinctId = RNPyyRnLib.getDistinctId();
+ * var distinctId = RNSensorsAnalyticsModule.getDistinctId();
  */
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getDistinctId){
     @try {
@@ -529,7 +541,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getDistinctId){
  * <p>
  * RN 中使用示例：
  *    async  getDistinctIdPromise() {
- *       var distinctId = await RNPyyRnLib.getDistinctIdPromise()
+ *       var distinctId = await RNSensorsAnalyticsModule.getDistinctIdPromise()
  *    };
  */
 RCT_EXPORT_METHOD(getDistinctIdPromise:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
@@ -555,7 +567,7 @@ RCT_EXPORT_METHOD(getDistinctIdPromise:(RCTPromiseResolveBlock)resolve reject:(R
  * <p>
  * RN 中使用示例：
  *    async  getAnonymousIdPromise() {
- *       var anonymousId = await RNPyyRnLib.getAnonymousIdPromise()
+ *       var anonymousId = await RNSensorsAnalyticsModule.getAnonymousIdPromise()
  *    };
  */
 RCT_EXPORT_METHOD(getAnonymousIdPromise:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
@@ -575,7 +587,7 @@ RCT_EXPORT_METHOD(getAnonymousIdPromise:(RCTPromiseResolveBlock)resolve reject:(
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.registerSuperProperties({"Platform":"iOS"})}>
+ *            RNSensorsAnalyticsModule.registerSuperProperties({"Platform":"iOS"})}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(registerSuperProperties:(NSDictionary *)properties){
@@ -595,7 +607,7 @@ RCT_EXPORT_METHOD(registerSuperProperties:(NSDictionary *)properties){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.unregisterSuperProperty("Platform")}>
+ *            RNSensorsAnalyticsModule.unregisterSuperProperty("Platform")}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(unregisterSuperProperty:(NSString *)property){
@@ -614,7 +626,7 @@ RCT_EXPORT_METHOD(unregisterSuperProperty:(NSString *)property){
  *     <Button
  *            title="Button"
  *            onPress={()=>
- *            RNPyyRnLib.clearSuperProperties()}>
+ *            RNSensorsAnalyticsModule.clearSuperProperties()}>
  *     </Button>
  */
 RCT_EXPORT_METHOD(clearSuperProperties){
@@ -633,7 +645,7 @@ RCT_EXPORT_METHOD(clearSuperProperties){
  *                   <Button
  *                   title="Button"
  *                   onPress={()=>
- *                   RNPyyRnLib.flush()}>
+ *                   RNSensorsAnalyticsModule.flush()}>
  *                   </Button>
  */
 RCT_EXPORT_METHOD(flush){
@@ -652,7 +664,7 @@ RCT_EXPORT_METHOD(flush){
  *                   <Button
  *                   title="Button"
  *                   onPress={()=>
- *                   RNPyyRnLib.deleteAll()}>
+ *                   RNSensorsAnalyticsModule.deleteAll()}>
  *                   </Button>
  */
 RCT_EXPORT_METHOD(deleteAll){
@@ -672,7 +684,7 @@ RCT_EXPORT_METHOD(deleteAll){
  *                   <Button
  *                   title="Button"
  *                   onPress={()=>
- *                   RNPyyRnLib.identify("AAA")}>
+ *                   RNSensorsAnalyticsModule.identify("AAA")}>
  *                   </Button>
 */
 RCT_EXPORT_METHOD(identify:(NSString *)anonymousId) {
@@ -695,7 +707,7 @@ RCT_EXPORT_METHOD(identify:(NSString *)anonymousId) {
  *                   <Button
  *                   title="Button"
  *                   onPress={()=>
- *                   RNPyyRnLib.trackChannelEvent("channelEvent",{"ProductID":123456,"UserLevel":"VIP"})}>
+ *                   RNSensorsAnalyticsModule.trackChannelEvent("channelEvent",{"ProductID":123456,"UserLevel":"VIP"})}>
  *                   </Button>
 */
 RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event properties:(nullable NSDictionary *)propertyDict) {
@@ -715,65 +727,4 @@ RCT_EXPORT_METHOD(trackChannelEvent:(NSString *)event properties:(nullable NSDic
     }
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-
-RCT_EXPORT_METHOD(trackViewClick:(NSInteger)reactTag) {
-    @try {
-        Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
-        SEL shared = NSSelectorFromString(@"sharedInstance");
-        if (![sa respondsToSelector:shared]) {
-            return;
-        }
-        id sdk = [sa performSelector:shared];
-        if (![sdk respondsToSelector:NSSelectorFromString(@"trackViewClick:")]) {
-            return;
-        }
-        NSNumber *tag = [NSNumber numberWithInteger:reactTag];
-        [sdk performSelector:NSSelectorFromString(@"trackViewClick:") withObject:tag];
-    } @catch (NSException *exception) {
-        NSLog(@"[RNSensorsAnalytics] error:%@",exception);
-    }
-}
-
-RCT_EXPORT_METHOD(prepareView:(NSInteger)reactTag enableClick:(BOOL)enableClick properties:(NSDictionary *)properties) {
-  @try {
-      Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
-      SEL shared = NSSelectorFromString(@"sharedInstance");
-      if (![sa respondsToSelector:shared]) {
-          return;
-      }
-      id sdk = [sa performSelector:shared];
-      SEL prepareView = NSSelectorFromString(@"prepareView:properties:");
-      if (![sdk respondsToSelector:prepareView]) {
-          return;
-      }
-      NSDictionary *object = @{@"reactTag":@(reactTag), @"enableClick":@(enableClick)};
-      [sdk performSelector:prepareView withObject:object withObject:properties];
-  } @catch (NSException *exception) {
-      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
-  }
-}
-
-RCT_EXPORT_METHOD(onPageShow:(NSString *)pageName) {
-  @try {
-      Class sa = NSClassFromString(@"SensorsAnalyticsSDK");
-      SEL shared = NSSelectorFromString(@"sharedInstance");
-      if (![sa respondsToSelector:shared]) {
-          return;
-      }
-      id sdk = [sa performSelector:shared];
-      SEL onPageShow = NSSelectorFromString(@"trackViewScreen:withProperties:");
-      if (![sdk respondsToSelector:onPageShow]) {
-          return;
-      }
-      [sdk performSelector:onPageShow withObject:pageName withObject:nil];
-  } @catch (NSException *exception) {
-//      NSLog(@"[RNSensorsAnalytics] error:%@",exception);
-  }
-}
-
-#pragma clang diagnostic pop
-
 @end
-
